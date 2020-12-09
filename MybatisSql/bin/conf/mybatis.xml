@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  <!-- configuration:全局配置文件的根节点 -->
+  <!-- properties: 引入配置好的PROPERIES文件 -->
+  <!-- transactionManager:事务管理器 -->
+  <!-- JDBC: 以jdbc管理事务 -->
+  <!-- dataSource:数据源 -->
+<configuration>
+
+     <properties resource="conf/db.properties"></properties>
+     
+     <settings>
+<!-- 以log日志打印执行的sql语句 -->
+		<setting name="logImpl" 		value="STDOUT_LOGGING"/>
+		<setting name="cacheEnabled" 	value="true"/>
+	</settings>
+	<!-- 设置别名 -->
+	<typeAliases>
+	<typeAlias type="com.book.vo.Books" alias="ALIASBook"/>
+	
+	</typeAliases>
+	
+     
+     <environments default="development">
+        <environment id="development">
+           <transactionManager type="JDBC"></transactionManager>
+           <dataSource type="POOLED">
+             <property  name="driver"   value="${driver}"/>
+             <property  name="url"      value="${url}"/>
+             <property  name="username" value="${username}"/>
+             <property  name="password" value="${userpass}"/>
+           </dataSource>
+        </environment>
+     </environments>
+     
+
+		<mappers>
+		<!-- 将mappers映射文件集成到全局配置文件中    注册信息 -->
+			<!--<mapper resource="mapper/BookMapper.xml"/>  -->
+		<!--实现批量注册-->
+			<package name="mapper"/>
+		</mappers>
+
+
+</configuration>
+

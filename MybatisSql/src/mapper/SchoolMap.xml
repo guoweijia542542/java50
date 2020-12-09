@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper  PUBLIC  "-//mybatis.org//DTD Mapper 3.0//EN " "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.SchoolMap">
+
+<resultMap type="com.book.vo.School" id="school">
+	<id property="tea_id" column="tea_id"/>
+	<result property="schname" column="schname"/>
+	
+	<collection property="tea" ofType="com.book.vo.Teacher">
+	<id property="tea_id" column="tea_id"/>
+	<result property="stu_id" column="stu_id"/>
+	<result property="tname" column="tname"/>
+	
+	<collection property="stu" ofType="com.book.vo.Student" >
+	<id property="stu_id" column="stu_id"/>
+	<result property="sname" column="sname"/>
+	</collection>
+	
+	</collection>
+
+	
+</resultMap>
+
+
+
+
+
+
+
+
+
+<select id="getinfo" resultMap="school" parameterType="com.book.vo.School">
+select c.sname,b.tname,a.schname from school a join teacher b on a.tea_id=b.tea_id join student c on b.stu_id=c.stu_id where 1=1
+<if test="schname!=null and schname!='' ">
+ and schname=#{schname} 
+</if>
+
+</select>
+
+
+
+
+
+</mapper>

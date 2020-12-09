@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 接口的映射文件 -->
+<!-- id 映射接口的方法名  resultType返回值类型    parameterType方法参数类型  -->
+<!DOCTYPE  mapper  PUBLIC  "-//mybatis.org//DTD Mapper 3.0//EN " "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BookMapper">
+
+
+<!-- 开启了二级缓存 -->
+<cache/>
+
+
+
+<select id="select" parameterType="int" resultType="com.book.vo.Books" useCache="true">
+select bname,bauthor,bdesc from books where bid=#{id}
+</select>
+<update id="update" parameterType="com.book.vo.Books">
+update books set bname=#{bname},bauthor=#{bauthor},bdesc=#{bdesc} where bid=#{bid}
+</update>
+<delete id="delete"  parameterType="com.book.vo.Books">
+delete from books where bid=#{bid}
+</delete>
+
+<insert id="insert"  parameterType="com.book.vo.Books">
+insert into books(bname,bauthor,bdesc) values(#{bname},#{bauthor},#{bdesc})
+</insert>
+
+<!-- 实现查询全部 -->
+
+<select id="selectAll" resultType="com.book.vo.Books">
+select bid,bname,bauthor,bdesc from books
+</select>
+
+
+<select id="selectMuhu" resultType="com.book.vo.Books" parameterType="com.book.vo.Books" >
+select bid,bname,bauthor,bdesc from books where bname like concat('%',#{bname},'%') or bauthor like concat('%',#{bauthor},'%') or bid like concat('%',#{bid},'%') or bdesc like concat('%',#{bdesc},'%')
+
+</select>
+
+
+
+
+
+<select id="selectGetBooks" resultType="com.book.vo.Books" parameterType="com.book.vo.Books">
+select bname,bauthor from books
+	<where>
+		<if test="bname!=null and bname!='' ">
+			bname=#{bname}</if>
+		 <if test="bauthor!=null and bauthor!='' ">
+	 		and author=#{author} </if>
+	 </where>
+<!-- $只能获取固定的列相当于statment #获取值 相当于prestatment 可以防止sql注入 -->
+	
+</select>
+</mapper>
